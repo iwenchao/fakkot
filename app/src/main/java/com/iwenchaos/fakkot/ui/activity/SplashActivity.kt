@@ -1,4 +1,4 @@
-package com.iwenchaos.fakkot.ui
+package com.iwenchaos.fakkot.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
