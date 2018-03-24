@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FakKot</string>
+    <string name="hello_welcome_kotlin_world">Hello,Welcome \n Kotlin world...</string>
+</resources>
