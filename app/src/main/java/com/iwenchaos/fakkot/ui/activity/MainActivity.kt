@@ -2,12 +2,13 @@ package com.iwenchaos.fakkot.ui.activity
 
 import com.iwenchaos.fakkot.R
 import com.iwenchaos.fakkot.base.BaseActivity
+import com.iwenchaos.fakkot.ui.fragment.HomeFragment
 
 class MainActivity : BaseActivity() {
 
     private var lastTime : Long = 0
     private var currentIndex = 0
-//    private var homeFragment
+    private var homeFragment :HomeFragment? = null
 
 
 

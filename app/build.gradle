@@ -39,6 +39,8 @@ dependencies {
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$brvah_version"
     //web
     implementation "com.just.agentweb:agentweb:$agentweb_version"
+    //kotlinx
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
