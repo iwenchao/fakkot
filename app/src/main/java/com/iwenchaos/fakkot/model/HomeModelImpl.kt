@@ -1,5 +1,6 @@
 package com.iwenchaos.fakkot.model
 
+import com.iwenchaos.fakkot.bean.BannerResponse
 import com.iwenchaos.fakkot.bean.HomeListResponse
 import com.iwenchaos.fakkot.cancelByActive
 import com.iwenchaos.fakkot.contract.HomeContract
@@ -13,16 +14,12 @@ import kotlinx.coroutines.experimental.async
  * on 2018/3/24. 15:21
  * 文件描述：
  */
-class HomeModelImpl :HomeContract.HomeModel {
-
-
+class HomeModelImpl :HomeContract.HomeModel{
     /**
      * Home list async
      */
     private var homeListAsync: Deferred<HomeListResponse>? = null
-
-
-
+    private var bannerAsync:Deferred<BannerResponse>? = null
 
 
     override fun getHomeList(onHomeListListener: HomeContract.Presenter.OnHomeListListener, page: Int) {
@@ -33,6 +30,22 @@ class HomeModelImpl :HomeContract.HomeModel {
             }){
                 homeListAsync?.cancelByActive()
 //                homeListAsync =
+            }
+        }
+    }
+
+
+
+
+
+    override fun getBanner(onBannerListener: HomeContract.Presenter.OnBannerListener) {
+        async(UI){
+            tryCatch({
+                it.printStackTrace()
+                onBannerListener.getBannerFailed(it.toString())
+            }){
+                bannerAsync?.cancelByActive()
+//                bannerAsync =
             }
         }
     }

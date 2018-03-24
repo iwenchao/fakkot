@@ -31,7 +31,7 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
     }
 
     override fun getBanner() {
-
+        homeModel.getBanner(this)
 
 
     }

@@ -113,5 +113,10 @@ interface HomeContract {
          */
         fun getHomeList(onHomeListListener: Presenter.OnHomeListListener, page: Int = 0)
 
+        /**
+         * get banner
+         * @param onBannerListener HomePresenter.OnBannerListener
+         */
+        fun getBanner(onBannerListener: Presenter.OnBannerListener)
     }
 }
