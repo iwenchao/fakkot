@@ -47,4 +47,7 @@ object Constant {
     const val MAIN_LIKE_REQUEST_CODE = 101
     const val LOGIN_KEY="LOGIN_KEY"
 
+    const val INTERCEPTOR_ENABLE = false
+    const val REQUEST_BASE_URL: String = "http://wanandroid.com/"
+
 }

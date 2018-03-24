@@ -41,11 +41,17 @@ dependencies {
     implementation "com.just.agentweb:agentweb:$agentweb_version"
     //kotlinx
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
-
+    //内存leak检查
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    //网络库
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    //logging
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_logging_version"
+    //gson
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_converter_gson_version"
 
-
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofit2_converter_kotlin_coroutines_version"
 
 
 
