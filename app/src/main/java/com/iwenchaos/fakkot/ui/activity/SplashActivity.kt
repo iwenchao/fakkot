@@ -3,26 +3,27 @@ package com.iwenchaos.fakkot.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import com.iwenchaos.fakkot.R
-import com.iwenchaos.fakkot.base.BaseActivity
 
 /**
  * Created by chaos
  * on 2018/3/24. 13:53
  * 文件描述：
  */
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Handler().postDelayed({ startActivity(Intent(this@SplashActivity, MainActivity::class.java)) }, 3000)
-        finish()
+        setContentView(R.layout.activity_splash)
+        Handler().postDelayed({
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            finish()
+        }, 3000)
+
     }
 
-    override fun setLayoutId(): Int = R.layout.activity_splash
-
-    override fun cancelRequest() {}
 
 
 }
