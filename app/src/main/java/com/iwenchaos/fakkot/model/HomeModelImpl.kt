@@ -35,9 +35,6 @@ class HomeModelImpl :HomeContract.HomeModel{
     }
 
 
-
-
-
     override fun getBanner(onBannerListener: HomeContract.Presenter.OnBannerListener) {
         async(UI){
             tryCatch({
