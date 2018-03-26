@@ -18,7 +18,6 @@ abstract class BaseFragment : Fragment() {
         cancelRequest()
     }
 
-
 }
 
 
