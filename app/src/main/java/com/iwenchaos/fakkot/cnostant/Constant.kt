@@ -46,6 +46,8 @@ object Constant {
     const val MAIN_REQUEST_CODE = 100
     const val MAIN_LIKE_REQUEST_CODE = 101
     const val LOGIN_KEY="LOGIN_KEY"
+    const val USERNAME_KEY = "USERNAME_KEY"
+    const val PASSWORD_KEY = "PASSWORD_KEY"
 
     const val INTERCEPTOR_ENABLE = false
     const val REQUEST_BASE_URL: String = "http://wanandroid.com/"
@@ -55,4 +57,12 @@ object Constant {
      * result null
      */
     const val RESULT_NULL = "result null!"
+
+    /**
+     * share key
+     */
+    const val CONTENT_SHARE_TYPE = "text/plain"
+    const val SEARCH_KEY = "search"
+    const val LIKE_KEY = "like"
+
 }

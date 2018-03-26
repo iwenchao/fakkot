@@ -131,6 +131,11 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
 
+    /**
+     * scroll to top
+     */
+    fun smoothScrollToPosition() = recyclerView.scrollToPosition(0)
+
     override fun getHomeListSuccess(result: HomeListResponse) {
     }
 

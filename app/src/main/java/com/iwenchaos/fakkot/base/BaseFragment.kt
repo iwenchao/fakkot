@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment
  * on 2018/3/24. 14:08
  * 文件描述：
  */
-abstract class BaseFragment:Fragment() {
+abstract class BaseFragment : Fragment() {
 
-    private var isFirst : Boolean = false
+    private var isFirst: Boolean = false
 
     protected abstract fun cancelRequest()
 
