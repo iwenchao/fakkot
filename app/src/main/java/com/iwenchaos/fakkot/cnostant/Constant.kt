@@ -50,4 +50,9 @@ object Constant {
     const val INTERCEPTOR_ENABLE = false
     const val REQUEST_BASE_URL: String = "http://wanandroid.com/"
 
+
+    /**
+     * result null
+     */
+    const val RESULT_NULL = "result null!"
 }

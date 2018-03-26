@@ -17,13 +17,15 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
     private val homeModel : HomeContract.HomeModel = HomeModelImpl()
 
 
-
+    /**
+     * 获取首页数据
+     */
     override fun getHomeList(page: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       homeModel.getHomeList(this,page)
     }
 
     override fun getHomeListSuccess(result: HomeListResponse) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun getHomeListFailed(errorMessage: String?) {
@@ -32,19 +34,28 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
 
     override fun getBanner() {
         homeModel.getBanner(this)
-
-
     }
 
     override fun getBannerSuccess(result: BannerResponse) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       if (result.errorCode != 0){
+           homeView.getBannerFailed(result.errorMsg)
+           return
+       }
+        result.data ?: let {
+            homeView.getBannerZero()
+            return
+        }
+        homeView.getBannerSuccess(result)
     }
 
     override fun getBannerFailed(errorMessage: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       homeView.getBannerFailed(errorMessage)
     }
 
 
+    fun cancelRequest(){
+        homeModel.cancelBannerRequest()
+    }
 
 
 

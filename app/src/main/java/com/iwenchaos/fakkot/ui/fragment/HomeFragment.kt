@@ -111,7 +111,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         }
 
         homePresenter.getBanner()
-        homePresenter.getHomeList()
+//        homePresenter.getHomeList()
 
     }
 

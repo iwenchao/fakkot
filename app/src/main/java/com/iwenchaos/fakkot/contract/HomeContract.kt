@@ -118,5 +118,7 @@ interface HomeContract {
          * @param onBannerListener HomePresenter.OnBannerListener
          */
         fun getBanner(onBannerListener: Presenter.OnBannerListener)
+
+        fun cancelBannerRequest()
     }
 }

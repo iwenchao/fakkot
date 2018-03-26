@@ -3,7 +3,9 @@ package com.iwenchaos.fakkot.model
 import com.iwenchaos.fakkot.bean.BannerResponse
 import com.iwenchaos.fakkot.bean.HomeListResponse
 import com.iwenchaos.fakkot.cancelByActive
+import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.contract.HomeContract
+import com.iwenchaos.fakkot.net.RetrofitHelper
 import com.iwenchaos.fakkot.tryCatch
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
@@ -19,9 +21,8 @@ class HomeModelImpl :HomeContract.HomeModel{
      * Home list async
      */
     private var homeListAsync: Deferred<HomeListResponse>? = null
+
     private var bannerAsync:Deferred<BannerResponse>? = null
-
-
     override fun getHomeList(onHomeListListener: HomeContract.Presenter.OnHomeListListener, page: Int) {
         async(UI) {
             tryCatch({
@@ -29,7 +30,14 @@ class HomeModelImpl :HomeContract.HomeModel{
                 onHomeListListener.getHomeListFailed(it.toString())
             }){
                 homeListAsync?.cancelByActive()
-//                homeListAsync =
+                homeListAsync = RetrofitHelper.retrofistService.getHomeList(page)
+                //get async result 异步
+                val result = homeListAsync?.await()
+                result ?: let {
+                    onHomeListListener.getHomeListFailed(Constant.RESULT_NULL)
+                    return@async
+                }
+                onHomeListListener.getHomeListSuccess(result)
             }
         }
     }
@@ -42,9 +50,20 @@ class HomeModelImpl :HomeContract.HomeModel{
                 onBannerListener.getBannerFailed(it.toString())
             }){
                 bannerAsync?.cancelByActive()
-//                bannerAsync =
+                bannerAsync = RetrofitHelper.retrofistService.getBanner()
+                val result = bannerAsync?.await()
+                result ?: let {
+                    onBannerListener.getBannerFailed(Constant.RESULT_NULL)
+                    return@async
+                }
+                onBannerListener.getBannerSuccess(result)
             }
         }
+    }
+
+
+    override fun cancelBannerRequest() {
+        bannerAsync?.cancelByActive()
     }
 
 }
