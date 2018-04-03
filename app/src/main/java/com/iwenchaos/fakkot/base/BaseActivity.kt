@@ -1,8 +1,8 @@
 package com.iwenchaos.fakkot.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import com.gyf.barlibrary.ImmersionBar
@@ -12,22 +12,23 @@ import com.gyf.barlibrary.ImmersionBar
  * on 2018/3/24. 13:36
  * 文件描述：
  */
-abstract  class BaseActivity :AppCompatActivity() {
+@SuppressLint("Registered")
+abstract class BaseActivity : AppCompatActivity() {
 
-    protected lateinit var immersionBar : ImmersionBar
+    protected lateinit var immersionBar: ImmersionBar
 
-    private val imm : InputMethodManager by lazy {
+    private val imm: InputMethodManager by lazy {
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(setLayoutId())
         initImmersionBar()
     }
 
-    open protected fun initImmersionBar(){
+    open protected fun initImmersionBar() {
         //初始化 沉浸式bar
         immersionBar = ImmersionBar.with(this)
         immersionBar.init()
@@ -36,7 +37,7 @@ abstract  class BaseActivity :AppCompatActivity() {
     /**
      * layout id
      */
-    protected abstract fun setLayoutId():Int
+    protected abstract fun setLayoutId(): Int
 
     /**
      * 取消该页面的request
@@ -51,15 +52,15 @@ abstract  class BaseActivity :AppCompatActivity() {
     }
 
     override fun finish() {
-        if (!isFinishing){
+        if (!isFinishing) {
             super.finish()
             hideSoftKeyboard()
         }
 
     }
 
-    private fun hideSoftKeyboard(){
-        currentFocus?.let { imm.hideSoftInputFromInputMethod(it.windowToken,2) }
+    private fun hideSoftKeyboard() {
+        currentFocus?.let { imm.hideSoftInputFromInputMethod(it.windowToken, 2) }
     }
 
 }
