@@ -27,7 +27,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:text="未登录"/>
+        android:text="未登录"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/navigationViewLogout"
@@ -37,6 +37,6 @@
         android:layout_gravity="end"
         android:textColor="@color/white"
         android:theme="@style/Theme.AppCompat.Light"
-        tools:text="@string/logout"/>
+        android:text="@string/logout"/>
 
 </LinearLayout>

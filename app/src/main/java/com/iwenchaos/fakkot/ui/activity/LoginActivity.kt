@@ -9,6 +9,9 @@ import com.iwenchaos.fakkot.base.BaseActivity
  * 文件描述：
  */
 class LoginActivity : BaseActivity() {
+
+
+
     override fun setLayoutId(): Int = R.layout.activity_splash
 
     override fun cancelRequest() {
