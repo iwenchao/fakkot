@@ -1,6 +1,7 @@
 package com.iwenchaos.fakkot.presenter
 
 import com.iwenchaos.fakkot.contract.LoginContract
+import com.iwenchaos.fakkot.model.LoginModelImpl
 
 /**
  * Created by chaos
@@ -9,8 +10,10 @@ import com.iwenchaos.fakkot.contract.LoginContract
  */
 class LoginPresenterImpl constructor(val loginView: LoginContract.LoginView) : LoginContract.LoginPresenter {
 
+    private val loginModel : LoginContract.LoginModel = LoginModelImpl()
 
     override fun doLogin(name: String, password: String) {
 
+        loginModel.login(name,password)
     }
 }
