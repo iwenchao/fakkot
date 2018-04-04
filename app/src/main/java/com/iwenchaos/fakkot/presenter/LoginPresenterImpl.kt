@@ -7,7 +7,7 @@ import com.iwenchaos.fakkot.contract.LoginContract
  * on 2018/4/4. 09:24
  * 文件描述：
  */
-class LoginPresenterImpl : LoginContract.LoginPresenter {
+class LoginPresenterImpl constructor(val loginView: LoginContract.LoginView) : LoginContract.LoginPresenter {
 
 
     override fun doLogin(name: String, password: String) {

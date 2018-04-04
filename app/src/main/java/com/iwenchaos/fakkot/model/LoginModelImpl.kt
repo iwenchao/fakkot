@@ -10,7 +10,11 @@ import com.iwenchaos.fakkot.contract.LoginContract
 class LoginModelImpl : LoginContract.LoginModel {
 
 
-    override fun login() {
+    /**
+     * 登陆
+     */
+    override fun login(name: String, password: String) {
 
     }
+
 }

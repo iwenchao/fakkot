@@ -9,8 +9,10 @@ interface LoginContract {
 
 
     interface LoginModel {
-
-        fun login()
+        /**
+         * 登陆
+         */
+        fun login(name: String, password: String)
     }
 
     interface LoginView {
@@ -19,7 +21,9 @@ interface LoginContract {
 
 
     interface LoginPresenter {
-
+        /**
+         * 登陆
+         */
         fun doLogin(name: String, password: String)
     }
 }
