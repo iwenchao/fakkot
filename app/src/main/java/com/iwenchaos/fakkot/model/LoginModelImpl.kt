@@ -18,7 +18,10 @@ class LoginModelImpl : LoginContract.LoginModel {
      */
     override fun login(name: String, password: String) {
         async(UI) {
-            tryCatch {
+            tryCatch({
+                it.printStackTrace()
+
+            }){
 
             }
         }

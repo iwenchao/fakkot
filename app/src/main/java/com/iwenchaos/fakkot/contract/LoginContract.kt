@@ -26,4 +26,12 @@ interface LoginContract {
          */
         fun doLogin(name: String, password: String)
     }
+
+
+    interface OnLoginCallback<T : Any> {
+
+        fun onSuccess(t:T)
+
+        fun onFail(errorMsg: String?)
+    }
 }
