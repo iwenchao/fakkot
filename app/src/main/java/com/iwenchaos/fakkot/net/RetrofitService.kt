@@ -29,5 +29,13 @@ interface RetrofitService {
      */
     @POST("/user/login")
     @FormUrlEncoded
-    fun doLogin(@Field("username") username: String, @Field("password") password: String): Deferred<LoginResponse>
+    fun doLogin(@Field("username") username: String,
+                @Field("password") password: String): Deferred<LoginResponse>
+
+
+    @POST("/user/register")
+    @FormUrlEncoded
+    fun doRegister(@Field("username") username: String,
+                   @Field("password") password: String,
+                   @Field("repassword") repassword: String): Deferred<LoginResponse>
 }

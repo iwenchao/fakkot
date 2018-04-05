@@ -15,7 +15,14 @@ interface LoginContract {
         /**
          * 登陆
          */
-        fun login(name: String, password: String,callback: OnRequstCallback<LoginResponse>)
+        fun login(name: String, password: String, callback: OnRequstCallback<LoginResponse>)
+
+        /**
+         * 注册
+         */
+        fun register(name: String, password: String, repassword: String, callback: OnRequstCallback<LoginResponse>)
+
+
     }
 
     interface LoginView {
@@ -56,6 +63,11 @@ interface LoginContract {
          * 登陆
          */
         fun doLogin(name: String, password: String)
+
+        /**
+         *注册
+         */
+        fun doRegister(name: String, password: String, repassword: String)
     }
 
 }

@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListener {
 
 
-
     private var isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
     private var user: String by Preference(Constant.USERNAME_KEY, "")
     private var psd: String by Preference(Constant.PASSWORD_KEY, "")
@@ -49,11 +48,18 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
                 R.id.login -> {
                     if (valid()) {
                         loginProgress.visibility = View.VISIBLE
-                        loginPresenter.doLogin( username.text.toString(), password.text.toString())
+                        loginPresenter.doLogin(username.text.toString(), password.text.toString())
                     }
                 }
                 R.id.register -> {
-
+                    if (valid()) {
+                        loginProgress.visibility = View.VISIBLE
+                        loginPresenter.doRegister(
+                                username.text.toString(),
+                                password.text.toString(),
+                                password.text.toString()
+                        )
+                    }
                 }
                 R.id.loginExit -> {
 
@@ -103,7 +109,6 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
     }
 
     override fun loginSuccess(result: LoginResponse) {
-        isLogin = true
         toast(R.string.login_success)
     }
 
@@ -117,23 +122,31 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
     }
 
     override fun loginRegisterAfter(result: LoginResponse) {
-        isLogin= true
+        isLogin = true
         user = result.data.username
         psd = result.data.password
         loginProgress.visibility = View.GONE
         setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra(Constant.CONTENT_TITLE_KEY,result.data.username)
+            putExtra(Constant.CONTENT_TITLE_KEY, result.data.username)
             finish()
         })
-
 
 
     }
 
     override fun registerSuccess(result: LoginResponse) {
+        toast(R.string.register_success)
+
     }
 
     override fun registerFailed(errorMessage: String?) {
+        isLogin = false
+        loginProgress.visibility = View.GONE
+        username.requestFocus()
+        errorMessage?.let {
+            toast(it)
+        }
+
     }
 
     override fun cancelRequest() {

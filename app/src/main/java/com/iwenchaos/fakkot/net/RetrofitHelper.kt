@@ -27,10 +27,10 @@ object RetrofitHelper {
     private const val CONNECT_TIMEOUT = 30L
     private const val READ_TIMEOUT = 10L
 
-    val retrofistService :RetrofitService = RetrofitHelper.getService(Constant.REQUEST_BASE_URL,RetrofitService::class.java)
+    val retrofistService: RetrofitService = RetrofitHelper.getService(Constant.REQUEST_BASE_URL, RetrofitService::class.java)
 
 
-    private fun <T> getService(url:String,service:Class<T>) :T = create(url).create(service)
+    private fun <T> getService(url: String, service: Class<T>): T = create(url).create(service)
 
 
     private fun create(url: String): Retrofit {
@@ -44,7 +44,7 @@ object RetrofitHelper {
                 val domain = request.url().host()
                 //set-cookie maybe has multi , login to save cookie
                 if ((requestUrl.contains(SAVE_USER_LOGIN_KEY)
-                        || requestUrl.contains(SAVE_USER_REGISTER_KEY))
+                                || requestUrl.contains(SAVE_USER_REGISTER_KEY))
                         && !response.header(SET_COOKIE_KEY)!!.isEmpty()) {
                     val cookies = response.headers(SET_COOKIE_KEY)
                     val cookie = encodeCookie(cookies)

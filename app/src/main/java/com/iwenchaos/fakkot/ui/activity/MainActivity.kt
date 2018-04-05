@@ -1,5 +1,6 @@
 package com.iwenchaos.fakkot.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -143,6 +144,22 @@ class MainActivity : BaseActivity() {
             navigationViewUsername.text = username
             navigationViewLogout.text = getString(R.string.logout)
             homeFragment?.refreshData()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            Constant.MAIN_REQUEST_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    navigationViewUsername.text = data?.getStringExtra(Constant.CONTENT_TITLE_KEY)
+                    navigationViewLogout.text = getString(R.string.logout)
+                }
+                homeFragment?.refreshData()
+            }
+            Constant.MAIN_LIKE_REQUEST_CODE -> {
+                homeFragment?.refreshData()
+            }
         }
     }
 

@@ -17,20 +17,42 @@ import kotlinx.coroutines.experimental.async
  * 文件描述：
  */
 class LoginModelImpl : LoginContract.LoginModel {
-
     private var loginAsync: Deferred<LoginResponse>? = null
 
+
     /**
-     * 登陆
+     * 注册
      */
-    override fun login(name: String, password: String, callback: OnRequstCallback<LoginResponse> ) {
+    override fun register(name: String, password: String, repassword: String, callback: OnRequstCallback<LoginResponse>) {
         async(UI) {
             tryCatch({
                 it.printStackTrace()
                 callback.fail(it.toString())
             }) {
                 loginAsync?.cancelByActive()
-                loginAsync = RetrofitHelper.retrofistService.doLogin(name,password)
+                loginAsync = RetrofitHelper.retrofistService.doRegister(name, password, repassword)
+                val result = loginAsync?.await()
+                result ?: let {
+                    callback.fail(Constant.RESULT_NULL)
+                    return@async
+                }
+                callback.success(result)
+            }
+        }
+
+    }
+
+    /**
+     * 登陆
+     */
+    override fun login(name: String, password: String, callback: OnRequstCallback<LoginResponse>) {
+        async(UI) {
+            tryCatch({
+                it.printStackTrace()
+                callback.fail(it.toString())
+            }) {
+                loginAsync?.cancelByActive()
+                loginAsync = RetrofitHelper.retrofistService.doLogin(name, password)
                 val result = loginAsync?.await()
                 result ?: let {
                     callback.fail(Constant.RESULT_NULL)
