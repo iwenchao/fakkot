@@ -1,13 +1,17 @@
 package com.iwenchaos.fakkot
 
+import android.app.Activity
 import android.content.Context
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.iwenchaos.fakkot.cnostant.Constant
+import com.just.agentweb.AgentWeb
+import com.just.agentweb.ChromeClientCallbackManager
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.JobCancellationException
 
@@ -74,38 +78,51 @@ inline fun tryCatch(catchBlock: (Throwable) -> Unit, tryBlock: () -> Unit) {
  * @param resource layoutId
  * @return View
  */
-fun Context.inflate(@LayoutRes resource:Int):View = LayoutInflater.from(this).inflate(resource,null)
+fun Context.inflate(@LayoutRes resource: Int): View = LayoutInflater.from(this).inflate(resource, null)
 
 /**
  * save cookie string
  */
-fun encodeCookie(cookies : List<String>):String{
+fun encodeCookie(cookies: List<String>): String {
     val sb = StringBuilder()
     val set = HashSet<String>()
     cookies.map { cookie ->
         cookie.split(";".toRegex())
                 .dropLastWhile { it.isEmpty() }
                 .toTypedArray()
-    }.forEach{
+    }.forEach {
         it.filterNot { set.contains(it) }.forEach { set.add(it) }
     }
 
     val ite = set.iterator()
-    while (ite.hasNext()){
+    while (ite.hasNext()) {
         val cookie = ite.next()
         sb.append(cookie).append(";")
     }
 
     val last = sb.lastIndexOf(";")
-    if (sb.length - 1 == last){
+    if (sb.length - 1 == last) {
         sb.deleteCharAt(last)
     }
     return sb.toString()
 
 
-
 }
 
+
+fun String.getAgentWeb(
+        activity: Activity,
+        webContent: ViewGroup,
+        layoutParams: ViewGroup.LayoutParams,
+        receivedTitleCallback: ChromeClientCallbackManager.ReceivedTitleCallback?
+) = AgentWeb.with(activity)
+        .setAgentWebParent(webContent, layoutParams)
+        .useDefaultIndicator()
+        .defaultProgressBarColor()
+        .setReceivedTitleCallback(receivedTitleCallback)
+        .createAgentWeb()
+        .ready()
+        .go(this)!!// !!表示什么意思？
 
 
 
