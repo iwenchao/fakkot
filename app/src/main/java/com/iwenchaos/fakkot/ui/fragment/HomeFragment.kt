@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     private lateinit var bannerRecyclerView: HorizontalRecyclerView
     private val datas = mutableListOf<Datas>()
     private val bannerDatas = mutableListOf<BannerResponse.Data>()
-    private val isLogin: Boolean by Preference(Constant.LOGIN_KEY,false)
+    private val isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
 
     //TODO 问题1：这里presenter继承接口类型的时候，会出错；必须显示为当前类型？？？
     private val homePresenter: HomePresenterImpl by lazy {
@@ -99,11 +99,11 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         }
         bannerAdapter.run {
             bindToRecyclerView(bannerRecyclerView)
-            onItemClickListener  = this@HomeFragment.onBannerItemClickListener
+            onItemClickListener = this@HomeFragment.onBannerItemClickListener
         }
         homeAdapter.run {
             bindToRecyclerView(recyclerView)
-            setOnLoadMoreListener(onRequestLoadMoreListener,recyclerView)
+            setOnLoadMoreListener(onRequestLoadMoreListener, recyclerView)
             onItemClickListener = this@HomeFragment.onItemClickListener
             onItemChildClickListener = this@HomeFragment.onItemChildClickListener
             addHeaderView(bannerRecyclerView)
@@ -148,13 +148,30 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     override fun getHomeListSmall(result: HomeListResponse) {
     }
 
+
+    /**
+     * 广告轮播模块
+     */
     override fun getBannerSuccess(result: BannerResponse) {
+        swipeRefreshLayout.isRefreshing = false
+        result.data?.let {
+            bannerAdapter.replaceData(it)
+            startSwitchJob()
+        }
     }
 
     override fun getBannerFailed(errorMessage: String?) {
+        swipeRefreshLayout.isRefreshing = false
+        errorMessage?.let {
+            activity.toast(it)
+        } ?: let {
+            activity.toast(R.string.load_failed)
+        }
     }
 
     override fun getBannerZero() {
+        swipeRefreshLayout.isRefreshing = false
+        activity.toast(getString(R.string.get_data_zero))
     }
 
 
@@ -200,9 +217,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                 }
             }
 
-    private val onItemClickListener = BaseQuickAdapter.OnItemClickListener{_,_,position ->
-        if (datas.size != 0){
-            Intent(activity,ContentActivity::class.java).run {
+    private val onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
+        if (datas.size != 0) {
+            Intent(activity, ContentActivity::class.java).run {
                 putExtra(Constant.CONTENT_URL_KEY, datas[position].link)
                 putExtra(Constant.CONTENT_ID_KEY, datas[position].id)
                 putExtra(Constant.CONTENT_TITLE_KEY, datas[position].title)
@@ -212,25 +229,25 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     private val onRequestLoadMoreListener = BaseQuickAdapter.RequestLoadMoreListener {
-        val  page = homeAdapter.data.size /20 +1
+        val page = homeAdapter.data.size / 20 + 1
         homePresenter.getHomeList(page)
     }
 
-    private val onBannerItemClickListener = BaseQuickAdapter.OnItemClickListener{_,_,position ->
-        if (bannerDatas.size  != 0){
+    private val onBannerItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
+        if (bannerDatas.size != 0) {
             Intent(activity, ContentActivity::class.java).run {
-                putExtra(Constant.CONTENT_URL_KEY,bannerDatas[position].url)
-                putExtra(Constant.CONTENT_TITLE_KEY,bannerDatas[position].title)
+                putExtra(Constant.CONTENT_URL_KEY, bannerDatas[position].url)
+                putExtra(Constant.CONTENT_TITLE_KEY, bannerDatas[position].title)
                 startActivity(this)
             }
         }
     }
 
 
-    private val onScrollListener =  object : RecyclerView.OnScrollListener(){
+    private val onScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
-            when(newState){
+            when (newState) {
                 RecyclerView.SCROLL_STATE_IDLE -> {
                     currentIndex = linearlayoutManager.findFirstVisibleItemPosition()
                     startSwitchJob()
@@ -250,8 +267,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     private fun getBannerSwitchJob() = launch {
-        repeat(Int.MAX_VALUE){
-            if (bannerDatas.size == 0){
+        repeat(Int.MAX_VALUE) {
+            if (bannerDatas.size == 0) {
                 return@launch
             }
             delay(BANNER_TIME)
@@ -264,7 +281,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
 
     private fun startSwitchJob() = bannerSwitchJob?.run {
-        if (!isActive){
+        if (!isActive) {
             bannerSwitchJob = getBannerSwitchJob().apply {
                 start()
             }

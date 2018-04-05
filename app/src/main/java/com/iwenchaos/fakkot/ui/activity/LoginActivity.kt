@@ -62,7 +62,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
                     }
                 }
                 R.id.loginExit -> {
-
+                    finish()
                 }
             }
         }
