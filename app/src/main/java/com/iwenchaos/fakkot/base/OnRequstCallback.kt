@@ -9,7 +9,7 @@ interface OnRequstCallback<T : Any> {
     /**
      * 请求成功
      */
-    fun success(t: T)
+    fun success(result: T)
 
     /**
      * 请求失败

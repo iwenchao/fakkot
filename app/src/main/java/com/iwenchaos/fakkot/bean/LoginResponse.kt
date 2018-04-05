@@ -7,7 +7,7 @@ package com.iwenchaos.fakkot.bean
  */
 data class LoginResponse(
         var errorCode: Int,
-        var errorMsg: Int,
+        var errorMsg: String,
         var data: Data
 ) {
     data class Data(

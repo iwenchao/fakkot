@@ -1,11 +1,14 @@
 package com.iwenchaos.fakkot.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import com.iwenchaos.fakkot.R
 import com.iwenchaos.fakkot.base.BaseActivity
 import com.iwenchaos.fakkot.base.Preference
+import com.iwenchaos.fakkot.bean.LoginResponse
 import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.contract.LoginContract
 import com.iwenchaos.fakkot.presenter.LoginPresenterImpl
@@ -20,17 +23,13 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListener {
 
 
-    private val isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
-    private val user: String by Preference(Constant.USERNAME_KEY, "")
-    private val psd: String by Preference(Constant.PASSWORD_KEY, "")
+
+    private var isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
+    private var user: String by Preference(Constant.USERNAME_KEY, "")
+    private var psd: String by Preference(Constant.PASSWORD_KEY, "")
 
     private val loginPresenter: LoginContract.LoginPresenter by lazy {
         LoginPresenterImpl(this)
-    }
-
-
-    override fun start() {
-
     }
 
     override fun setLayoutId(): Int = R.layout.activity_login
@@ -50,7 +49,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
                 R.id.login -> {
                     if (valid()) {
                         loginProgress.visibility = View.VISIBLE
-                        loginPresenter.doLogin(username.text.toString(), password.text.toString())
+                        loginPresenter.doLogin( username.text.toString(), password.text.toString())
                     }
                 }
                 R.id.register -> {
@@ -101,6 +100,40 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
             return true
         }
 
+    }
+
+    override fun loginSuccess(result: LoginResponse) {
+        isLogin = true
+        toast(R.string.login_success)
+    }
+
+    override fun loginFailed(errorMessage: String?) {
+        isLogin = false
+        loginProgress.visibility = View.GONE
+        errorMessage?.let {
+            toast(it)
+        }
+
+    }
+
+    override fun loginRegisterAfter(result: LoginResponse) {
+        isLogin= true
+        user = result.data.username
+        psd = result.data.password
+        loginProgress.visibility = View.GONE
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra(Constant.CONTENT_TITLE_KEY,result.data.username)
+            finish()
+        })
+
+
+
+    }
+
+    override fun registerSuccess(result: LoginResponse) {
+    }
+
+    override fun registerFailed(errorMessage: String?) {
     }
 
     override fun cancelRequest() {

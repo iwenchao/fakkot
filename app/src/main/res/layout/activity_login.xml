@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/dp_40">
 
-    <android.support.v4.widget.CircleImageView
+    <ImageView
         android:id="@+id/loginLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

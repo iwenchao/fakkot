@@ -17,13 +17,20 @@ class LoginPresenterImpl constructor(val loginView: LoginContract.LoginView) : L
     override fun doLogin(name: String, password: String) {
         loginModel.login(name, password, object : OnRequstCallback<LoginResponse> {
 
-            override fun success(t: LoginResponse) {
+            override fun success(result: LoginResponse) {
                 //登录成功
+                if (result.errorCode !=  0){
+                    loginView.loginFailed(result.errorMsg)
+                }else{
+                    loginView.loginSuccess(result)
+                    loginView.loginRegisterAfter(result)
+                }
 
             }
 
             override fun fail(errorMsg: String) {
                 //登录失败
+                loginView.loginFailed(errorMsg)
 
             }
 
