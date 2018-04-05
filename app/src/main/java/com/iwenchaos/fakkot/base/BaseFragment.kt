@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment
  */
 abstract class BaseFragment : Fragment() {
 
-    private var isFirst: Boolean = false
+    protected var isFirst: Boolean = true
 
     protected abstract fun cancelRequest()
 

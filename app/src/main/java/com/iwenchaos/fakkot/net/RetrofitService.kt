@@ -3,6 +3,7 @@ package com.iwenchaos.fakkot.net
 import com.iwenchaos.fakkot.bean.BannerResponse
 import com.iwenchaos.fakkot.bean.HomeListResponse
 import com.iwenchaos.fakkot.bean.LoginResponse
+import com.iwenchaos.fakkot.bean.TreeListResponse
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.http.*
 
@@ -38,4 +39,8 @@ interface RetrofitService {
     fun doRegister(@Field("username") username: String,
                    @Field("password") password: String,
                    @Field("repassword") repassword: String): Deferred<LoginResponse>
+
+
+    @GET("/tree/json")
+    fun getTypeList(): Deferred<TreeListResponse>
 }

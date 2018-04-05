@@ -65,4 +65,9 @@ object Constant {
     const val SEARCH_KEY = "search"
     const val LIKE_KEY = "like"
 
+    /**
+     * childrenData key
+     */
+    const val CONTENT_CHILDREN_DATA_KEY = "childrenData"
+
 }

@@ -126,7 +126,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     fun refreshData() {
         swipeRefreshLayout.isRefreshing = true
-
+        homePresenter.getBanner()
+        homePresenter.getHomeList()
     }
 
 

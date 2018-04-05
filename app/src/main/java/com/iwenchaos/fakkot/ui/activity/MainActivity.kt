@@ -18,6 +18,7 @@ import com.iwenchaos.fakkot.base.Preference
 import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.toast
 import com.iwenchaos.fakkot.ui.fragment.HomeFragment
+import com.iwenchaos.fakkot.ui.fragment.TypeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -25,7 +26,7 @@ class MainActivity : BaseActivity() {
     private var lastTime: Long = 0
     private var currentIndex = 0
     private var homeFragment: HomeFragment? = null
-    private var typeFragment: HomeFragment? = null
+    private var typeFragment: TypeFragment? = null
     private var commonUseFragment: HomeFragment? = null
 
 
@@ -177,9 +178,6 @@ class MainActivity : BaseActivity() {
             toast(R.string.double_click_exit)
             lastTime = curTime
         }
-
-
-        super.onBackPressed()
     }
 
     override fun cancelRequest() {
@@ -222,10 +220,10 @@ class MainActivity : BaseActivity() {
                 true
             }
             R.id.navigation_type -> {
-                if (currentIndex == R.id.navigation_home) {
-                    homeFragment?.smoothScrollToPosition()
+                if (currentIndex == R.id.navigation_type) {
+                    typeFragment?.smoothScrollToPosition()
                 }
-                currentIndex = R.id.navigation_home
+                currentIndex = R.id.navigation_type
                 true
             }
             else -> {
@@ -249,9 +247,9 @@ class MainActivity : BaseActivity() {
                 }
             }
             //类型
-            homeFragment ?: let {
-                HomeFragment().let {
-                    homeFragment = it
+            typeFragment ?: let {
+                TypeFragment().let {
+                    typeFragment = it
                     add(R.id.content, it)
                 }
             }

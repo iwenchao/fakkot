@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_login.*
  */
 class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListener {
 
-
+    //by Preference的用法？
     private var isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
     private var user: String by Preference(Constant.USERNAME_KEY, "")
     private var psd: String by Preference(Constant.PASSWORD_KEY, "")
