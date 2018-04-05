@@ -49,7 +49,7 @@ object Constant {
     const val USERNAME_KEY = "USERNAME_KEY"
     const val PASSWORD_KEY = "PASSWORD_KEY"
 
-    const val INTERCEPTOR_ENABLE = false
+    const val INTERCEPTOR_ENABLE = true
     const val REQUEST_BASE_URL: String = "http://wanandroid.com/"
 
 

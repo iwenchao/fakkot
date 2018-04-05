@@ -14,22 +14,36 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
         HomeContract.Presenter.OnBannerListener {
 
 
-    private val homeModel : HomeContract.HomeModel = HomeModelImpl()
+    private val homeModel: HomeContract.HomeModel = HomeModelImpl()
 
 
     /**
      * 获取首页数据
      */
     override fun getHomeList(page: Int) {
-       homeModel.getHomeList(this,page)
+        homeModel.getHomeList(this, page)
     }
 
     override fun getHomeListSuccess(result: HomeListResponse) {
-
+        if (result.errorCode != 0) {
+            homeView.getHomeListFailed(result.errorMsg)
+            return
+        }
+        val total = result.data.total
+        if (total==0) {
+            homeView.getHomeListZero()
+            return
+        }
+        if (total < result.data.size){
+            homeView.getHomeListSmall(result)
+            return
+        }
+        homeView.getHomeListSuccess(result)
     }
 
     override fun getHomeListFailed(errorMessage: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        homeView.getHomeListFailed(errorMessage)
+
     }
 
     override fun getBanner() {
@@ -37,10 +51,10 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
     }
 
     override fun getBannerSuccess(result: BannerResponse) {
-       if (result.errorCode != 0){
-           homeView.getBannerFailed(result.errorMsg)
-           return
-       }
+        if (result.errorCode != 0) {
+            homeView.getBannerFailed(result.errorMsg)
+            return
+        }
         result.data ?: let {
             homeView.getBannerZero()
             return
@@ -49,19 +63,13 @@ class HomePresenterImpl(private val homeView: HomeContract.View) : HomeContract.
     }
 
     override fun getBannerFailed(errorMessage: String?) {
-       homeView.getBannerFailed(errorMessage)
+        homeView.getBannerFailed(errorMessage)
     }
 
 
-    fun cancelRequest(){
+    fun cancelRequest() {
         homeModel.cancelBannerRequest()
     }
-
-
-
-
-
-
 
 
 }

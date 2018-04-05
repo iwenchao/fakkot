@@ -50,7 +50,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     private val bannerDatas = mutableListOf<BannerResponse.Data>()
     private val isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
 
-    //TODO 问题1：这里presenter继承接口类型的时候，会出错；必须显示为当前类型？？？
     private val homePresenter: HomePresenterImpl by lazy {
         HomePresenterImpl(this)
     }
@@ -111,7 +110,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         }
 
         homePresenter.getBanner()
-//        homePresenter.getHomeList()
+        homePresenter.getHomeList()
 
     }
 
@@ -136,16 +135,58 @@ class HomeFragment : BaseFragment(), HomeContract.View {
      */
     fun smoothScrollToPosition() = recyclerView.scrollToPosition(0)
 
-    override fun getHomeListSuccess(result: HomeListResponse) {
-    }
-
-    override fun getHomeListFailed(errorMessage: String?) {
-    }
-
+    /**
+     * 获取首页数据
+     */
     override fun getHomeListZero() {
+        activity.toast(R.string.no_data)
     }
 
     override fun getHomeListSmall(result: HomeListResponse) {
+        result.data.datas?.let {
+            homeAdapter.run {
+                replaceData(it)
+                loadMoreComplete()
+                loadMoreEnd()
+                setEnableLoadMore(false)
+            }
+        }
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun getHomeListSuccess(result: HomeListResponse) {
+        result.data.datas?.let {
+            homeAdapter.run {
+                val total = result.data.total
+                if (result.data.offSet >= total || data.size >= total) {
+                    loadMoreEnd()
+                    return@let
+
+                }
+                if (swipeRefreshLayout.isRefreshing) {
+                    replaceData(it)
+                } else {
+                    addData(it)
+                }
+                loadMoreComplete()
+                setEnableLoadMore(true)
+            }
+        }
+        swipeRefreshLayout.isRefreshing = false
+
+
+    }
+
+    override fun getHomeListFailed(errorMessage: String?) {
+        homeAdapter.setEnableLoadMore(false)
+        homeAdapter.loadMoreFail()
+        errorMessage?.let {
+            activity.toast(it)
+        } ?: let {
+            activity.toast(R.string.load_failed)
+        }
+        swipeRefreshLayout.isRefreshing = false
+
     }
 
 
