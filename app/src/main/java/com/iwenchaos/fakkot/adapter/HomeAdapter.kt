@@ -16,8 +16,8 @@ class HomeAdapter(val context: Context, datas: MutableList<Datas>)
     override fun convert(helper: BaseViewHolder, item: Datas?) {
         item ?: return
         //这里可以把数据bind view
-        helper.setText(R.id.homeItemTitle,item.title)
-                .setText(R.id.homeItemAuthor,item.author)
+        helper.setText(R.id.homeItemTitle, item.title)
+                .setText(R.id.homeItemAuthor, item.author)
                 .addOnClickListener(R.id.homeItemType)
                 .setTextColor(R.id.homeItemType, context.resources.getColor(R.color.colorPrimary))
                 .linkify(R.id.homeItemType)
