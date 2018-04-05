@@ -6,10 +6,14 @@ package com.iwenchaos.fakkot.base
  * 文件描述：
  */
 interface OnRequstCallback<T : Any> {
-
+    /**
+     * 请求成功
+     */
     fun success(t: T)
 
+    /**
+     * 请求失败
+     */
     fun fail(errorMsg: String)
 
-    fun before()
 }

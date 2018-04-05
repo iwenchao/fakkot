@@ -1,5 +1,8 @@
 package com.iwenchaos.fakkot.contract
 
+import com.iwenchaos.fakkot.base.OnRequstCallback
+import com.iwenchaos.fakkot.bean.LoginResponse
+
 /**
  * Created by chaos
  * on 2018/4/4. 09:20
@@ -12,7 +15,7 @@ interface LoginContract {
         /**
          * 登陆
          */
-        fun login(name: String, password: String)
+        fun login(name: String, password: String,callback: OnRequstCallback<LoginResponse>)
     }
 
     interface LoginView {
@@ -27,11 +30,4 @@ interface LoginContract {
         fun doLogin(name: String, password: String)
     }
 
-
-    interface OnLoginCallback<T : Any> {
-
-        fun onSuccess(t:T)
-
-        fun onFail(errorMsg: String?)
-    }
 }

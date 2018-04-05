@@ -2,9 +2,9 @@ package com.iwenchaos.fakkot.net
 
 import com.iwenchaos.fakkot.bean.BannerResponse
 import com.iwenchaos.fakkot.bean.HomeListResponse
+import com.iwenchaos.fakkot.bean.LoginResponse
 import kotlinx.coroutines.experimental.Deferred
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * Created by chaos
@@ -22,5 +22,12 @@ interface RetrofitService {
 
 
     @GET("/banner/json")
-    fun getBanner():Deferred<BannerResponse>
+    fun getBanner(): Deferred<BannerResponse>
+
+    /**
+     * 用户登录接口
+     */
+    @POST("/user/login")
+    @FormUrlEncoded
+    fun doLogin(@Field("username") username: String, @Field("password") password: String): Deferred<LoginResponse>
 }

@@ -5,7 +5,9 @@ import android.text.TextUtils
 import android.view.View
 import com.iwenchaos.fakkot.R
 import com.iwenchaos.fakkot.base.BaseActivity
+import com.iwenchaos.fakkot.base.OnRequstCallback
 import com.iwenchaos.fakkot.base.Preference
+import com.iwenchaos.fakkot.bean.LoginResponse
 import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.contract.LoginContract
 import com.iwenchaos.fakkot.presenter.LoginPresenterImpl
@@ -48,9 +50,22 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
         if (v != null) {
             when (v.id) {
                 R.id.login -> {
-                    if(valid()){
+                    if (valid()) {
                         loginProgress.visibility = View.VISIBLE
-                        loginPresenter.doLogin(username.text.toString(),password.text.toString())
+                        loginPresenter.doLogin(
+                                username.text.toString(),
+                                password.text.toString(),
+                                object : OnRequstCallback<LoginResponse> {
+                                    override fun success(t: LoginResponse) {
+
+                                    }
+
+                                    override fun fail(errorMsg: String) {
+
+                                    }
+
+                                }
+                        )
                     }
                 }
                 R.id.register -> {

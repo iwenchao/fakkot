@@ -6,9 +6,9 @@ package com.iwenchaos.fakkot.bean
  * 文件描述：
  */
 data class LoginResponse(
-        var errorCode:Int,
-        var errorMsg:Int,
-        var data:Data
+        var errorCode: Int,
+        var errorMsg: Int,
+        var data: Data
 ) {
     data class Data(
             var id: Int,

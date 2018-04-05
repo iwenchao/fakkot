@@ -1,7 +1,13 @@
 package com.iwenchaos.fakkot.model
 
+import com.iwenchaos.fakkot.base.OnRequstCallback
+import com.iwenchaos.fakkot.bean.LoginResponse
+import com.iwenchaos.fakkot.cancelByActive
+import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.contract.LoginContract
+import com.iwenchaos.fakkot.net.RetrofitHelper
 import com.iwenchaos.fakkot.tryCatch
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 
@@ -12,17 +18,25 @@ import kotlinx.coroutines.experimental.async
  */
 class LoginModelImpl : LoginContract.LoginModel {
 
+    private var loginAsync: Deferred<LoginResponse>? = null
 
     /**
      * 登陆
      */
-    override fun login(name: String, password: String) {
+    override fun login(name: String, password: String, callback: OnRequstCallback<LoginResponse> ) {
         async(UI) {
             tryCatch({
                 it.printStackTrace()
-
-            }){
-
+                callback.fail(it.toString())
+            }) {
+                loginAsync?.cancelByActive()
+                loginAsync = RetrofitHelper.retrofistService.doLogin(name,password)
+                val result = loginAsync?.await()
+                result ?: let {
+                    callback.fail(Constant.RESULT_NULL)
+                    return@async
+                }
+                callback.success(result)
             }
         }
     }
