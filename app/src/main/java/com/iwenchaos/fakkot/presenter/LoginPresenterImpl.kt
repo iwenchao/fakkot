@@ -15,7 +15,6 @@ class LoginPresenterImpl constructor(val loginView: LoginContract.LoginView) : L
     private val loginModel: LoginContract.LoginModel = LoginModelImpl()
 
     override fun doLogin(name: String, password: String) {
-
         loginModel.login(name, password, object : OnRequstCallback<LoginResponse> {
 
             override fun success(t: LoginResponse) {
