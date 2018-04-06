@@ -77,6 +77,6 @@ interface RetrofitService {
     ): Deferred<HomeListResponse>
 
     @GET("/article/list/{page}/json")
-    fun getArticleList(@Query("cid") cid: Int,
-                       @Path("path") page: Int): Deferred<ArticleListResponse>
+    fun getArticleList(@Path("page") page: Int,
+                       @Query("cid") cid: Int): Deferred<ArticleListResponse>
 }

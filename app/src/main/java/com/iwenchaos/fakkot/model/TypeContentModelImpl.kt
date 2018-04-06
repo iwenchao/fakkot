@@ -27,7 +27,7 @@ class TypeContentModelImpl : TypeContentContract.TypeModel {
                 callback.fail(it.toString())
             }) {
                 contentAsync?.cancelByActive()
-                contentAsync = RetrofitHelper.retrofistService.getArticleList(cid, page)
+                contentAsync = RetrofitHelper.retrofistService.getArticleList(page, cid)
 
                 val result = contentAsync?.await()
                 result ?: let {
