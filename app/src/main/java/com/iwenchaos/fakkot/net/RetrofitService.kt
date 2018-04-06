@@ -43,4 +43,15 @@ interface RetrofitService {
 
     @GET("/tree/json")
     fun getTypeList(): Deferred<TreeListResponse>
+
+
+    /**
+     * 收藏外站文章
+     */
+    @POST("/lg/collect/add/json")
+    fun addCollectOutSideArticle(
+            @Field("title") title: String,
+            @Field("author") author: String,
+            @Field("link") link: String
+    ): Deferred<HomeListResponse>
 }

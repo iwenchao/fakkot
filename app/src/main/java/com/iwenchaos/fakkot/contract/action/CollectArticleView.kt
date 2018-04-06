@@ -21,4 +21,5 @@ interface CollectArticleView {
      * @param isAdd true add, false remove
      */
     fun collectArticleFailed(errorMessage: String?, isAdd: Boolean)
+
 }

@@ -1,6 +1,7 @@
 package com.iwenchaos.fakkot.ui.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import com.iwenchaos.fakkot.bean.HomeListResponse
 import com.iwenchaos.fakkot.cnostant.Constant
 import com.iwenchaos.fakkot.contract.action.CollectArticleView
 import com.iwenchaos.fakkot.getAgentWeb
+import com.iwenchaos.fakkot.presenter.ContentPresenterImpl
 import com.iwenchaos.fakkot.toast
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.ChromeClientCallbackManager
@@ -22,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_content.*
  * on 2018/3/24. 17:53
  * 文件描述：
  */
-class ContentActivity : BaseActivity() ,CollectArticleView{
+class ContentActivity : BaseActivity(), CollectArticleView {
 
 
     private lateinit var agentWeb: AgentWeb
@@ -30,6 +32,9 @@ class ContentActivity : BaseActivity() ,CollectArticleView{
     private lateinit var shareUrl: String
     private var shareId: Int = 0
     private val isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
+    private val collectArticlePresenter: ContentPresenterImpl by lazy {
+        ContentPresenterImpl(this)
+    }
 
     private val receivedTitleCallback = ChromeClientCallbackManager.ReceivedTitleCallback { _, title ->
         title?.let {
@@ -89,28 +94,39 @@ class ContentActivity : BaseActivity() ,CollectArticleView{
                             shareUrl
                     ))
                     type = Constant.CONTENT_SHARE_TYPE
-                    startActivity(Intent.createChooser(this,getString(R.string.share_title)))
+                    startActivity(Intent.createChooser(this, getString(R.string.share_title)))
                 }
                 return true
             }
             R.id.menuLike -> {
-                if (!isLogin){
-                    Intent(this,LoginActivity::class.java).run {
+                if (!isLogin) {
+                    Intent(this, LoginActivity::class.java).run {
                         startActivity(this)
                     }
                     toast(R.string.login_please_login)
                     return true
                 }
-                if (shareId == 0){
-
+                if (shareId == 0) {
+                    collectArticlePresenter.collectOutSideArticle(
+                            shareTitle,
+                            getString(R.string.outside_title),
+                            shareUrl,
+                            true
+                    )
+                    return true
                 }
+                collectArticlePresenter.collectArticle(shareId, true)
+                return true
             }
             R.id.menuBrowser -> {
-
+                Intent().run {
+                    action = "android.intent.action.VIEW"
+                    data = Uri.parse(shareUrl)
+                    startActivity(this)
+                }
+                return true
             }
         }
-
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -136,7 +152,7 @@ class ContentActivity : BaseActivity() ,CollectArticleView{
      * @param isAdd true add, false remove
      */
     override fun collectArticleSuccess(result: HomeListResponse, isAdd: Boolean) {
-
+        toast(if (isAdd) getString(R.string.bookmark_success) else getString(R.string.bookmark_cancel_success))
     }
 
     /**
@@ -145,7 +161,14 @@ class ContentActivity : BaseActivity() ,CollectArticleView{
      * @param isAdd true add, false remove
      */
     override fun collectArticleFailed(errorMessage: String?, isAdd: Boolean) {
+        toast(
+                if (isAdd)
+                    getString(R.string.bookmark_failed, errorMessage)
+                else
+                    getString(R.string.bookmark_cancel_failed, errorMessage))
     }
+
+
 
     override fun cancelRequest() {
     }

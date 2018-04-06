@@ -1,7 +1,10 @@
 package com.iwenchaos.fakkot.presenter
 
+import com.iwenchaos.fakkot.base.OnRequstCallback
+import com.iwenchaos.fakkot.bean.HomeListResponse
 import com.iwenchaos.fakkot.contract.ContentContract
 import com.iwenchaos.fakkot.contract.action.CollectArticleView
+import com.iwenchaos.fakkot.model.ContentModelImpl
 
 /**
  * Created by chaos
@@ -10,10 +13,33 @@ import com.iwenchaos.fakkot.contract.action.CollectArticleView
  */
 class ContentPresenterImpl(private val collectArticleView: CollectArticleView) : ContentContract.ContentPresenter {
 
-
+    private val collectModelImpl = ContentModelImpl()
 
 
     override fun collectOutSideArticle(title: String, author: String, link: String, isAdd: Boolean) {
+        collectModelImpl.collectOutsideArticle(title, author, link, isAdd, object : OnRequstCallback<HomeListResponse> {
+            /**
+             * 请求成功
+             */
+            override fun success(result: HomeListResponse) {
+                if (result.errorCode != 0){
+                    collectArticleView.collectArticleFailed(result.errorMsg,false)
+                }else{
+                    collectArticleView.collectArticleSuccess(result,false)
+                }
+            }
 
+            /**
+             * 请求失败
+             */
+            override fun fail(errorMsg: String) {
+                collectArticleView.collectArticleFailed(errorMsg,false)
+            }
+
+        })
+    }
+
+
+    override fun collectArticle(shareId: Int, boolean: Boolean) {
     }
 }
