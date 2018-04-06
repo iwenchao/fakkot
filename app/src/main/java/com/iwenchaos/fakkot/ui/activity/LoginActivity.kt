@@ -75,7 +75,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView, View.OnClickListe
         username.error = null
         password.error = null
 
-        var cancel: Boolean = false
+        var cancel = false
         var focusView: View? = null
 
         val usernameTxt = username.text
