@@ -8,10 +8,11 @@ import com.iwenchaos.fakkot.base.BaseActivity
  * on 2018/3/24. 18:04
  * 文件描述：
  */
-class TypeContentActivity:BaseActivity() {
+class TypeContentActivity : BaseActivity() {
+
+
     override fun setLayoutId(): Int = R.layout.activity_splash
 
     override fun cancelRequest() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
