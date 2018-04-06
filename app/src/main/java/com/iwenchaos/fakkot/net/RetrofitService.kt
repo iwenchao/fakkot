@@ -1,9 +1,6 @@
 package com.iwenchaos.fakkot.net
 
-import com.iwenchaos.fakkot.bean.BannerResponse
-import com.iwenchaos.fakkot.bean.HomeListResponse
-import com.iwenchaos.fakkot.bean.LoginResponse
-import com.iwenchaos.fakkot.bean.TreeListResponse
+import com.iwenchaos.fakkot.bean.*
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.http.*
 
@@ -78,4 +75,8 @@ interface RetrofitService {
             @Path("id") id: Int,
             @Field("originId") originId: Int = -1
     ): Deferred<HomeListResponse>
+
+    @GET("/article/list/{page}/json")
+    fun getArticleList(@Query("cid") cid: Int,
+                       @Path("path") page: Int): Deferred<ArticleListResponse>
 }
