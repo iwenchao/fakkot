@@ -46,7 +46,11 @@ class ContentPresenterImpl(private val collectArticleView: CollectArticleView) :
              * 请求成功
              */
             override fun success(result: HomeListResponse) {
-                collectArticleView.collectArticleSuccess(result, isAdd)
+                if (result.errorCode != 0) {
+                    collectArticleView.collectArticleFailed(result.errorMsg, isAdd)
+                } else {
+                    collectArticleView.collectArticleSuccess(result, isAdd)
+                }
             }
 
             /**
