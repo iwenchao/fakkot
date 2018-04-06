@@ -108,11 +108,8 @@ class ContentActivity : BaseActivity(), CollectArticleView {
                 }
                 if (shareId == 0) {
                     collectArticlePresenter.collectOutSideArticle(
-                            shareTitle,
-                            getString(R.string.outside_title),
-                            shareUrl,
-                            true
-                    )
+                            shareTitle, getString(R.string.outside_title),
+                            shareUrl, true)
                     return true
                 }
                 collectArticlePresenter.collectArticle(shareId, true)
@@ -167,7 +164,6 @@ class ContentActivity : BaseActivity(), CollectArticleView {
                 else
                     getString(R.string.bookmark_cancel_failed, errorMessage))
     }
-
 
 
     override fun cancelRequest() {

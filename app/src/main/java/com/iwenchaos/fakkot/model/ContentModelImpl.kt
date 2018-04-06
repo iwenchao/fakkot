@@ -17,9 +17,7 @@ import kotlinx.coroutines.experimental.async
  * 文件描述：
  */
 class ContentModelImpl : ContentContract.ContentModel {
-
     private var articleAsync: Deferred<HomeListResponse>? = null
-
 
     override fun collectOutsideArticle(title: String, author: String,
                                        link: String, isAdd: Boolean, callback: OnRequstCallback<HomeListResponse>) {
@@ -30,6 +28,31 @@ class ContentModelImpl : ContentContract.ContentModel {
             }) {
                 articleAsync?.cancelByActive()
                 articleAsync = RetrofitHelper.retrofistService.addCollectOutSideArticle(title, author, link)
+
+                val result = articleAsync?.await()
+                result ?: let {
+                    callback.fail(Constant.RESULT_NULL)
+                    return@async
+                }
+                callback.success(result)
+            }
+        }
+
+    }
+
+
+    override fun collectArticle(id: Int, isAdd: Boolean, callback: OnRequstCallback<HomeListResponse>) {
+        async(UI) {
+            tryCatch({
+                it.printStackTrace()
+                callback.fail(it.toString())
+            }) {
+                articleAsync?.cancelByActive()
+                articleAsync = if (isAdd){
+                    RetrofitHelper.retrofistService.addCollectArticle(id)
+                }else{
+                    RetrofitHelper.retrofistService.removeCollectArticle(id)
+                }
 
                 val result = articleAsync?.await()
                 result ?: let {

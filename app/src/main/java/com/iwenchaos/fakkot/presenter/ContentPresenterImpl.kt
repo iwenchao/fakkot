@@ -22,10 +22,10 @@ class ContentPresenterImpl(private val collectArticleView: CollectArticleView) :
              * 请求成功
              */
             override fun success(result: HomeListResponse) {
-                if (result.errorCode != 0){
-                    collectArticleView.collectArticleFailed(result.errorMsg,false)
-                }else{
-                    collectArticleView.collectArticleSuccess(result,false)
+                if (result.errorCode != 0) {
+                    collectArticleView.collectArticleFailed(result.errorMsg, isAdd)
+                } else {
+                    collectArticleView.collectArticleSuccess(result, isAdd)
                 }
             }
 
@@ -33,13 +33,30 @@ class ContentPresenterImpl(private val collectArticleView: CollectArticleView) :
              * 请求失败
              */
             override fun fail(errorMsg: String) {
-                collectArticleView.collectArticleFailed(errorMsg,false)
+                collectArticleView.collectArticleFailed(errorMsg, isAdd)
             }
 
         })
     }
 
 
-    override fun collectArticle(shareId: Int, boolean: Boolean) {
+    override fun collectArticle(shareId: Int, isAdd: Boolean) {
+        collectModelImpl.collectArticle(shareId, isAdd, object : OnRequstCallback<HomeListResponse> {
+            /**
+             * 请求成功
+             */
+            override fun success(result: HomeListResponse) {
+                collectArticleView.collectArticleSuccess(result, isAdd)
+            }
+
+            /**
+             * 请求失败
+             */
+            override fun fail(errorMsg: String) {
+                collectArticleView.collectArticleFailed(errorMsg, isAdd)
+            }
+
+        })
+
     }
 }

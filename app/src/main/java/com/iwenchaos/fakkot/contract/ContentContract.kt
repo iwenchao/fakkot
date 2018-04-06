@@ -18,6 +18,8 @@ interface ContentContract {
                                   isAdd: Boolean,
                                   callback: OnRequstCallback<HomeListResponse>)
 
+        fun collectArticle(id: Int, isAdd: Boolean,callback: OnRequstCallback<HomeListResponse>)
+
 
     }
 
