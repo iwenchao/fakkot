@@ -28,5 +28,41 @@
         tools:ignore="RtlCompat"
         zhy:max_select="0" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/list_item_selector"
+        android:padding="@dimen/dp_10"
+        android:text="@string/hot_key"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/hotFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        tools:ignore="RtlCompat"
+        zhy:max_select="0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/list_item_selector"
+        android:padding="@dimen/dp_10"
+        android:text="@string/common_use"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/commonUseFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        tools:ignore="RtlCompat"
+        zhy:max_select="0" />
+
 
 </android.support.constraint.ConstraintLayout>

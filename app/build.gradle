@@ -54,7 +54,9 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofit2_converter_kotlin_coroutines_version"
     //hongyang tab的选择器
     implementation "com.hyman:flowlayout-lib:$flowlayout_version"
-
+    //kotlin的butterKnife
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_compiler_version"
+    implementation "com.jakewharton:kotterknife:$kotterknife_version"
 
 
     testImplementation 'junit:junit:4.12'
